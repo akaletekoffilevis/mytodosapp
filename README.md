@@ -1,4 +1,4 @@
-# TodosApp
+# ,ytodosapp
 
 A modern and responsive Todo application built with **ASP.NET Core MVC**. This application allows users to create, read, update, and delete todos with ease. It features a clean user interface that works seamlessly on both desktop and mobile devices.
 
@@ -24,7 +24,7 @@ A modern and responsive Todo application built with **ASP.NET Core MVC**. This a
 ## Project Structure
 
 ```
-TodosApp/
+mytodosapp/
 ├── Controllers/
 │   └── TodoController.cs          # Handles all todo operations
 ├── Models/
@@ -52,13 +52,13 @@ TodosApp/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/TodosApp.git
-   cd TodosApp
+   git clone https://github.com/akaletekoffilevis/mytodosapp.git
+   cd mytodosapp
    ```
 
 2. **Install dependencies**
    ```bash
-   cd TodosApp
+   cd mytodosapp
    dotnet restore
    ```
 
@@ -75,7 +75,8 @@ TodosApp/
    ```
 
 5. **Access the application**
-   - Open your browser and navigate to `https://localhost:5001`
+   - Open your browser and navigate to `https://localhost:[PORT]`
+   - Or click on the link show in terminal 
 
 ## Usage
 
