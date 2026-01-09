@@ -1,4 +1,4 @@
-# mytodosapp
+# My TodosApp
 
 A modern and responsive Todo application built with **ASP.NET Core MVC**. This application allows users to create, read, update, and delete todos with ease. It features a clean user interface that works seamlessly on both desktop and mobile devices.
 
