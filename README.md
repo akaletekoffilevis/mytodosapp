@@ -1,4 +1,4 @@
-# TodosApp
+# My TodosApp
 
 Modern ASP.NET Core MVC todo list that uses Entity Framework Core with SQLite. The UI is built with Bootstrap 5 and Font Awesome for quick, responsive layouts.
 
@@ -17,6 +17,7 @@ Modern ASP.NET Core MVC todo list that uses Entity Framework Core with SQLite. T
 
 ## Project Structure
 ```
+mytodosapp/
 TodosApp/
 ├── Program.cs
 ├── Data/
@@ -40,9 +41,90 @@ TodosApp/
 3. **Configure SQLite**: in `appsettings.json`, ensure the connection string key is `ConectionStrings:TodoDatabase` (default `Data Source=todo.db`).
 4. **Create database** (add a migration if none exists):
    ```bash
+   git clone https://github.com/akaletekoffilevis/mytodosapp.git
+   cd mytodosapp
+   ```
+
+2. **Install dependencies**
+   ```bash
+   cd mytodosapp
+   dotnet restore
+   ```
+
+3. **Configure the database**
+   - Edit `appsettings.json` if needed (default uses SQLite)
+   - Run migrations:
+   ```bash
    dotnet ef migrations add InitialCreate
    dotnet ef database update
    ```
+
+4. **Run the application**
+   ```bash
+   dotnet run
+   ```
+
+5. **Access the application**
+   - Open your browser and navigate to `https://localhost:[PORT]`
+   - Or click on the link show in terminal 
+
+## Usage
+
+### Create a Todo
+1. Click the **"Add Todo"** button
+2. Fill in the title (required), description, and due date (optional)
+3. Click **"Create"**
+
+### View Todos
+- All todos are displayed in a table on desktop or cards on mobile
+- Todos show their title, description, due date, and status
+
+### Edit a Todo
+1. Click the **"Edit"** button next to the todo
+2. Modify the details
+3. Click **"Save"**
+
+### Mark as Complete
+- Click the checkmark icon to mark a todo as completed
+- Click the undo icon to mark it as incomplete
+
+### Delete a Todo
+1. Click the **"Delete"** button
+2. Confirm the deletion in the confirmation dialog
+3. Click **"Delete Permanently"**
+
+## Database Schema
+
+```sql
+CREATE TABLE Todos (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(500),
+    IsCompleted BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETUTCDATE(),
+    DueDate DATETIME NULL
+)
+```
+
+### Todo Model
+
+```csharp
+public class Todo
+{
+    public int Id { get; set; }
+    public string Title { get; set; }           // Required
+    public string? Description { get; set; }    // Optional
+    public bool IsCompleted { get; set; }       // Default: false
+    public DateTime CreatedAt { get; set; }     // Auto-set
+    public DateTime? DueDate { get; set; }      // Optional
+}
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/Todo/Index` | Get all todos |
 5. **Run**: `dotnet run --project TodosApp.csproj` and browse to `https://localhost:5001` (or the port shown in the console).
 
 ## How It Works
