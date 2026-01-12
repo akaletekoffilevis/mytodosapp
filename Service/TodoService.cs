@@ -8,9 +8,9 @@ namespace TodosApp.Service;
 
 public class TodoService : ITodoService
 {
-    private readonly AppDbContext _db;
+    private readonly TodoContext _db;
 
-    public TodoService(AppDbContext db)
+    public TodoService(TodoContext db)
     {
         _db = db;
     }
