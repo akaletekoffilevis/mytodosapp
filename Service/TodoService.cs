@@ -56,16 +56,22 @@ public class TodoService : ITodoService
     public void DeleteTodo(int id)
     {
         var todo = Delete(id);
-        _db.Todos.Remove(todo);
-        _db.SaveChanges();
+        if (todo != null)
+        {
+            _db.Todos.Remove(todo);
+            _db.SaveChanges();
+        }
     }
 
     public void IsCompleted(int id)
     {
         var todo = _db.Todos.Find(id);
-        todo.IsCompleted = !todo.IsCompleted;
-        _db.Update(todo);
-        _db.SaveChangesAsync();
+        if (todo != null)
+        {
+            todo.IsCompleted = !todo.IsCompleted;
+            _db.Update(todo);
+            _db.SaveChangesAsync();
+        }
     }
 
 }
