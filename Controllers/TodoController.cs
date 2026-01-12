@@ -1,21 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TodosApp.Data;
+using TodosApp.Service;
 using TodosApp.Models;
 using System.Diagnostics;
 namespace TodosApp.Controllers;
 
 public class TodoController : Controller
 {
-   
-    private readonly AppDbContext _db;
+    private readonly TodoService _service;
 
-    public TodoController(AppDbContext db)
+    public TodoController(TodoService service)
     {
-        _db = db;
+        _service = service;
     }
 
-    public async Task<IActionResult> Index() => View(await _db.Todos.OrderByDescending(t => t.CreatedAt).ToListAsync());
+    public async Task<IActionResult> Index()
+    {
+        var todo = _service.Index();
+        return View(todo);
+    }
 
     public IActionResult Create() => View();
 
@@ -24,43 +26,26 @@ public class TodoController : Controller
     public async Task<IActionResult> Create(Todo todo)
     {
         if (!ModelState.IsValid) return View(todo);
-
-        todo.CreatedAt = DateTime.UtcNow;
-        _db.Todos.Add(todo);
-        await _db.SaveChangesAsync();
+        _service.CreateTodo(todo);
         return RedirectToAction(nameof(Index));
     }
+
 
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null) return NotFound();
-
-        var todo = await _db.Todos.FindAsync(id);
+        var todo = _service.Edit(id);
         if (todo == null) return NotFound();
-
         return View(todo);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,IsCompleted,DueDate,CreatedAt")] Todo todo)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,IsCompleted,DueDate")] Todo todo)
     {
         if (id != todo.Id) return NotFound();
-
         if (!ModelState.IsValid) return View(todo);
-
-        try
-        {
-            _db.Update(todo);
-            await _db.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!_db.Todos.Any(e => e.Id == id))
-                return NotFound();
-            else
-                throw;
-        }
+        if (!_service.EditTodo(todo)) return NotFound();
 
         return RedirectToAction(nameof(Index));
     }
@@ -68,10 +53,8 @@ public class TodoController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null) return NotFound();
-
-        var todo = await _db.Todos.FirstOrDefaultAsync(m => m.Id == id);
+        var todo = _service.Delete(id);
         if (todo == null) return NotFound();
-
         return View(todo);
     }
 
@@ -79,13 +62,7 @@ public class TodoController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var todo = await _db.Todos.FindAsync(id);
-        if (todo != null)
-        {
-            _db.Todos.Remove(todo);
-            await _db.SaveChangesAsync();
-        }
-
+        _service.DeleteTodo(id);
         return RedirectToAction(nameof(Index));
     }
 
@@ -93,13 +70,7 @@ public class TodoController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ToggleComplete(int id)
     {
-        var todo = await _db.Todos.FindAsync(id);
-        if (todo == null) return NotFound();
-
-        todo.IsCompleted = !todo.IsCompleted;
-        _db.Update(todo);
-        await _db.SaveChangesAsync();
-
+        _service.IsCompleted(id);
         return RedirectToAction(nameof(Index));
     }
 
