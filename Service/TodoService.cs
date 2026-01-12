@@ -17,18 +17,18 @@ public class TodoService : ITodoService
 
     public List<Todo> Index()
     {
-        return _db.todos.OrderByDescending(t => t.CreatedAt).ToList();
+        return _db.Todos.OrderByDescending(t => t.CreatedAt).ToList();
     }
 
     public void CreateTodo(Todo todo)
     {
-        _db.todos.Add(todo);
+        _db.Todos.Add(todo);
         _db.SaveChanges();
     }
 
     public Todo? Edit(int? id)
     {
-        return _db.todos.Find(id);
+        return _db.Todos.Find(id);
     }
 
     public bool EditTodo(Todo todo)
@@ -42,26 +42,27 @@ public class TodoService : ITodoService
         }
         catch (DbUpdateConcurrencyException)
         {
+            // if (!_db.Todos.Any(e => e.Id == id)){};
             return false;
         }
     }
 
     public Todo? Delete(int? id)
     {
-        var todo = _db.todos.FirstOrDefault(t => t.Id == id);
+        var todo = _db.Todos.FirstOrDefault(t => t.Id == id);
         return todo;
     }
 
     public void DeleteTodo(int id)
     {
         var todo = Delete(id);
-        _db.todos.Remove(todo);
+        _db.Todos.Remove(todo);
         _db.SaveChanges();
     }
 
     public void IsCompleted(int id)
     {
-        var todo = _db.todos.Find(id);
+        var todo = _db.Todos.Find(id);
         todo.IsCompleted = !todo.IsCompleted;
         _db.Update(todo);
         _db.SaveChangesAsync();
