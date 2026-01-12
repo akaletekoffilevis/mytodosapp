@@ -18,7 +18,6 @@ Modern ASP.NET Core MVC todo list that uses Entity Framework Core with SQLite. T
 ## Project Structure
 ```
 mytodosapp/
-TodosApp/
 ├── Program.cs
 ├── Data/
 │   └── TodoContext.cs
