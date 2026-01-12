@@ -12,6 +12,8 @@ builder.Services.AddDbContext<TodoContext>(opt =>
  )
 );
 
+builder.Services.AddScoped<TodosApp.Service.TodoService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
