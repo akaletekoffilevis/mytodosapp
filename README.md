@@ -1,112 +1,136 @@
-# My TodosApp
+# 📋 MyTodosApp
 
-Modern ASP.NET Core MVC todo list that uses Entity Framework Core with SQLite. The UI is built with Bootstrap 5 and Font Awesome for quick, responsive layouts.
+> A modern, production-ready todo management application built with **ASP.NET Core 9.0** and **Entity Framework Core**. Featuring a responsive UI with Bootstrap 5, real-time interactions, and robust server-side validation.
 
-## Features
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=.net)](https://dotnet.microsoft.com/)
+[![Entity Framework](https://img.shields.io/badge/EF%20Core-8.0-4B8BBE?logo=microsoft)](https://docs.microsoft.com/en-us/ef/)
 
-- Create, edit, delete todos with title, description, and optional due date
-- Toggle completion status from the list
-- Items are sorted by creation date (newest first)
-- Responsive views powered by Bootstrap 5
-- Server-side validation via data annotations on the model
+## ✨ Features
 
-## Tech Stack
+- ✅ **Full CRUD Operations** – Create, read, update, and delete todos with comprehensive metadata
+- ✅ **Smart Task Management** – Toggle completion status with instant UI feedback
+- ✅ **Intelligent Sorting** – Auto-sorted by creation date for optimal workflow
+- ✅ **Responsive Design** – Mobile-first Bootstrap 5 UI adapts seamlessly to all devices
+- ✅ **Server-Side Validation** – Robust data annotation-based validation ensures data integrity
+- ✅ **Optional Due Dates** – Plan ahead with built-in scheduling capabilities
+- ✅ **Persistent Storage** – SQLite database with EF Core migrations for reliability
 
-- ASP.NET Core 9.0 (MVC)
-- Entity Framework Core + SQLite
-- Bootstrap 5, jQuery, Font Awesome
-- C# 12
+## 🛠️ Tech Stack
 
-## Project Structure
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **ASP.NET Core** | 9.0 | Web framework & API layer |
+| **Entity Framework Core** | 8.0+ | ORM & database abstraction |
+| **SQLite** | Latest | Lightweight, file-based database |
+| **Bootstrap** | 5.x | Responsive UI framework |
+| **jQuery** | 3.x | DOM manipulation & interactions |
+| **Font Awesome** | 6.x | Icon library |
+| **C#** | 12 | Primary language |
+
+## 📁 Project Architecture
 
 ```
 mytodosapp/
-├── Program.cs
+├── Program.cs                          # Dependency injection & middleware configuration
+├── appsettings.json                    # Configuration & connection strings
 ├── Data/
-│   └── TodoContext.cs
+│   ├── TodoContext.cs                  # EF Core DbContext
+│   └── Migrations/                     # Database version control
 ├── Models/
-│   ├── Todo.cs
-│   └── ErrorViewModel.cs
-├── Service/
-│   ├── Interface/ITodoService.cs
-│   └── TodoService.cs
+│   ├── Todo.cs                         # Core domain model with validation
+│   └── ErrorViewModel.cs               # Error handling model
+├── Services/
+│   ├── Interfaces/
+│   │   └── ITodoService.cs             # Service contract
+│   └── TodoService.cs                  # Business logic layer
 ├── Controllers/
-│   └── TodoController.cs
+│   └── TodoController.cs               # MVC controller & request handling
 ├── Views/
-│   └── Todo/ (Index, Create, Edit, Delete)
-└── wwwroot/
+│   ├── Shared/                         # Common layouts & templates
+│   └── Todo/
+│       ├── Index.cshtml                # List view
+│       ├── Create.cshtml               # Create form
+│       ├── Edit.cshtml                 # Edit form
+│       └── Delete.cshtml               # Delete confirmation
+└── wwwroot/                            # Static files (CSS, JS, images)
 ```
 
-## Getting Started
+## 🚀 Quick Start
 
-1. **Prerequisites**: .NET 9 SDK and the `dotnet-ef` tool (`dotnet tool install --global dotnet-ef`).
-2. **Restore packages**: `dotnet restore`.
-3. **Configure SQLite**: in `appsettings.json`, ensure the connection string key is `ConectionStrings:TodoDatabase` (default `Data Source=todo.db`).
-4. **Create database** (add a migration if none exists):
+### Prerequisites
 
-   ```bash
-   git clone https://github.com/akaletekoffilevis/mytodosapp.git
-   cd mytodosapp
-   ```
+Ensure you have the following installed:
+- **.NET 9.0 SDK** or later ([Download](https://dotnet.microsoft.com/download))
+- **dotnet-ef** CLI tool:
+  ```bash
+  dotnet tool install --global dotnet-ef
+  ```
 
-5. **Install dependencies**
+### Installation Steps
 
-   ```bash
-   cd mytodosapp
-   dotnet restore
-   ```
+**1. Clone the repository**
+```bash
+git clone https://github.com/akaletekoffilevis/mytodosapp.git
+cd mytodosapp
+```
 
-6. **Configure the database**
-   - Edit `appsettings.json` if needed (default uses SQLite)
-   - Run migrations:
+**2. Restore NuGet packages**
+```bash
+dotnet restore
+```
 
-   ```bash
-   dotnet ef migrations add InitialCreate
-   dotnet ef database update
-   ```
+**3. Configure the database**
+- Review `appsettings.json` for connection string settings
+- Default: SQLite database at `todo.db`
 
-7. **Run the application**
+**4. Apply database migrations**
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
 
-   ```bash
-   dotnet run
-   ```
+**5. Run the application**
+```bash
+dotnet run
+```
 
-8. **Access the application**
-   - Open your browser and navigate to `https://localhost:[PORT]`
-   - Or click on the link show in terminal
+**6. Access in browser**
+- Navigate to the URL shown in console (typically `https://localhost:5001` or `https://localhost:7001`)
+- Or follow the direct link printed in terminal output
 
-## Usage
+## 📖 Usage Guide
 
-### Create a Todo
+### ➕ Create a Todo
+1. Click the **"Add Todo"** button on the dashboard
+2. Fill in the required **Title** field
+3. *(Optional)* Add a description and due date
+4. Click **"Create"** to save
 
-1. Click the **"Add Todo"** button
-2. Fill in the title (required), description, and due date (optional)
-3. Click **"Create"**
+### 👁️ View Todos
+- **Desktop:** Todos display in a full-featured table with sorting and filtering
+- **Mobile:** Optimized card-based layout with touch-friendly interactions
+- **Info:** Each todo shows title, description, due date, and status badge
 
-### View Todos
+### ✏️ Edit a Todo
+1. Click the **"Edit"** button (pencil icon)
+2. Modify the desired fields
+3. Click **"Save Changes"**
 
-- All todos are displayed in a table on desktop or cards on mobile
-- Todos show their title, description, due date, and status
+### ✅ Mark as Complete
+- Click the **checkmark icon** (✓) to mark complete
+- Click the **undo icon** (↺) to revert to incomplete
+- Status updates in real-time with visual feedback
 
-### Edit a Todo
+### 🗑️ Delete a Todo
+1. Click the **"Delete"** button (trash icon)
+2. Confirm deletion in the safety dialog
+3. Click **"Delete Permanently"** to confirm
+4. Todo is immediately removed from database
 
-1. Click the **"Edit"** button next to the todo
-2. Modify the details
-3. Click **"Save"**
+## 🗄️ Database Schema
 
-### Mark as Complete
-
-- Click the checkmark icon to mark a todo as completed
-- Click the undo icon to mark it as incomplete
-
-### Delete a Todo
-
-1. Click the **"Delete"** button
-2. Confirm the deletion in the confirmation dialog
-3. Click **"Delete Permanently"**
-
-## Database Schema
-
+### SQL Structure
 ```sql
 CREATE TABLE Todos (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -114,21 +138,32 @@ CREATE TABLE Todos (
     Description NVARCHAR(500),
     IsCompleted BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETUTCDATE(),
-    DueDate DATETIME NULL
+    DueDate DATETIME NULL,
+    CONSTRAINT CK_Title CHECK (LEN(Title) > 0)
 )
 ```
 
 ### Todo Model
-
 ```csharp
 public class Todo
 {
+    [Key]
     public int Id { get; set; }
-    public string Title { get; set; }           // Required
-    public string? Description { get; set; }    // Optional
-    public bool IsCompleted { get; set; }       // Default: false
-    public DateTime CreatedAt { get; set; }     // Auto-set
-    public DateTime? DueDate { get; set; }      // Optional
+
+    [Required]
+    [StringLength(100, MinimumLength = 1)]
+    public string Title { get; set; }
+
+    [StringLength(500)]
+    public string? Description { get; set; }
+
+    [DefaultValue(false)]
+    public bool IsCompleted { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime? DueDate { get; set; }
 }
 ```
 
